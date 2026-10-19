@@ -7,8 +7,8 @@ authors = ["Projet2Team <contact@projet2team.com>"]
 
 [dependencies]
 # GUI Native Immediate Mode
-eframe = { version = "0.27.2", default-features = false, features = ["default_fonts", "glow"] }
-egui = "0.27.2"
+eframe = { version = "0.30", default-features = false, features = ["default_fonts", "glow"] }
+egui = "0.30"
 
 # Cryptographie militaire & Sécurité mémoire
 aes-gcm = "0.10"

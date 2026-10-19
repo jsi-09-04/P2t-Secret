@@ -16,7 +16,7 @@ pub fn apply_theme(ctx: &egui::Context) {
     visuals.panel_fill = COLOR_BG_DARK;
     visuals.window_fill = COLOR_CARD_BG;
     visuals.window_rounding = Rounding::same(12.0);
-    visuals.window_stroke = Stroke::new(1.0, Color32::from_rgba_premultiplied(255, 255, 255, 20));
+    visuals.window_stroke = Stroke::new(1.0_f32, Color32::from_rgba_premultiplied(255, 255, 255, 20));
 
     // Widgets normaux
     visuals.widgets.inactive.bg_fill = Color32::from_rgba_premultiplied(20, 28, 48, 200);

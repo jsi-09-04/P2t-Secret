@@ -21,7 +21,7 @@ fn main() -> eframe::Result<()> {
         native_options,
         Box::new(|cc| {
             apply_theme(&cc.egui_ctx);
-            Box::new(P2TSecretApp::default())
+            Ok(Box::new(P2TSecretApp::default()))
         }),
     )
 }
