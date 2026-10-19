@@ -1,0 +1,31 @@
+# Rust
+target/
+**/*.rs.bk
+*.pdb
+
+# Données locales du coffre & fichiers secrets
+*.vault
+*.dat
+vault.p2t
+p2t_secret_data/
+.env*
+*.key
+*.pem
+
+# Python & ancien proto si conservé
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.coverage
+data/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Locks Agentic Factory
+backlog.json.lock

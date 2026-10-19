@@ -1,0 +1,211 @@
+{
+  "version": "2.0",
+  "project_name": "P2TSecret",
+  "updated_at": "2026-10-19T08:40:00.000000+00:00",
+  "total_epics": 5,
+  "total_tasks": 15,
+  "completed_tasks": 15,
+  "in_progress_tasks": 0,
+  "pending_tasks": 0,
+  "progress_pct": 100,
+  "epics": [
+    {
+      "epic_id": "EPIC-01",
+      "name": "Cadrage, Spécifications & Architecture Rust + egui",
+      "description": "Spécification fonctionnelle et technique pour une application de bureau 100% Rust et egui, multi-OS.",
+      "priority": "Must",
+      "status": "completed",
+      "tasks": [
+        {
+          "id": "T-P2TSECRET-EPIC-01-T01",
+          "title": "Initialisation du dépôt, configuration Git et raccordement Agentic Factory",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "plan_link": "memory_bank/specs/SPEC-01-fonctionnelle.md",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-01-T02",
+          "title": "Rédaction de la spécification fonctionnelle complète (SF-01 à SF-06)",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "plan_link": "memory_bank/specs/SPEC-01-fonctionnelle.md",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-01-T03",
+          "title": "Rédaction de la spécification technique et d'architecture 100% Rust + egui",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "plan_link": "memory_bank/specs/SPEC-02-technique-architecture.md",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        }
+      ]
+    },
+    {
+      "epic_id": "EPIC-02",
+      "name": "Noyau Cryptographique Rust & Sécurité Mémoire (Zeroize)",
+      "description": "Dérivation Argon2id, chiffrement AES-256-GCM, destruction de la RAM avec Zeroize et TOTP RFC 6238 pour Microsoft Authenticator.",
+      "priority": "Must",
+      "status": "completed",
+      "tasks": [
+        {
+          "id": "T-P2TSECRET-EPIC-02-T01",
+          "title": "Configuration Cargo.toml avec dépendances Rust sécurisées (aes-gcm, argon2, zeroize, totp-rs, qrcodegen)",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-02-T02",
+          "title": "Module KDF Argon2id & Chiffrement authentifié AES-256-GCM avec Zeroize",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-02-T03",
+          "title": "Module TOTP RFC 6238 Microsoft Authenticator & Génération matrice QR Code",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-02-T04",
+          "title": "Générateur cryptographique de mots de passe aléatoires avec calcul d'entropie",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        }
+      ]
+    },
+    {
+      "epic_id": "EPIC-03",
+      "name": "Format de Données & Stockage Atomique du Coffre",
+      "description": "Structure de données Vault, écriture atomique sur disque et protection contre la corruption.",
+      "priority": "Must",
+      "status": "completed",
+      "tasks": [
+        {
+          "id": "T-P2TSECRET-EPIC-03-T01",
+          "title": "Modélisation des entrées VaultEntry (Service, URL, Login, Password, Notes, Tags)",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-03-T02",
+          "title": "Gestionnaire de persistance atomique avec en-tête magique P2TV01",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        }
+      ]
+    },
+    {
+      "epic_id": "EPIC-04",
+      "name": "Interface Graphique Native egui / eframe",
+      "description": "Application de bureau autonome avec rendu GPU, thème sombre cyber, QR code natif et presse-papier sécurisé.",
+      "priority": "Must",
+      "status": "completed",
+      "tasks": [
+        {
+          "id": "T-P2TSECRET-EPIC-04-T01",
+          "title": "Point d'entrée eframe::App et gestionnaire d'états d'écrans (Init, Unlock, Dashboard)",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-04-T02",
+          "title": "Composant d'affichage de QR Code natif egui pour Microsoft Authenticator",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-04-T03",
+          "title": "Tableau de bord du coffre : liste filtrable, démasquage temporaire et copie sécurisée avec purge auto",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-04-T04",
+          "title": "Modales d'ajout/édition avec intégration du générateur de mot de passe",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        }
+      ]
+    },
+    {
+      "epic_id": "EPIC-05",
+      "name": "Suite de Tests Automatisés Rust & Validation TDD",
+      "description": "Validation unitaire et d'intégration de la cryptographie, du 2FA et de la persistance.",
+      "priority": "Must",
+      "status": "completed",
+      "tasks": [
+        {
+          "id": "T-P2TSECRET-EPIC-05-T01",
+          "title": "Tests unitaires du chiffrement AES-256-GCM, Argon2id et Zeroize",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        },
+        {
+          "id": "T-P2TSECRET-EPIC-05-T02",
+          "title": "Tests d'intégration TOTP RFC 6238, synchronisation Microsoft Authenticator et codes de secours",
+          "status": "completed",
+          "priority": "Must",
+          "workflow_type": "sdlc",
+          "source": "backlog_json",
+          "completed": true,
+          "updated_at": "2026-10-19T08:40:00.000000+00:00"
+        }
+      ]
+    }
+  ]
+}

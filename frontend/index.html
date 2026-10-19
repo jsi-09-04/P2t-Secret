@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2TSecret — Gestionnaire Sécurisé d'Identifiants & 2FA</title>
+  <meta name="description" content="Coffre-fort chiffré en AES-256-GCM avec authentification à double facteur (2FA) Microsoft Authenticator.">
+  
+  <!-- Typographie Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Principale -->
+  <header class="app-nav glass">
+    <div class="brand">
+      <div class="brand-icon">🔐</div>
+      <div class="brand-title">P2T<span>Secret</span></div>
+    </div>
+    
+    <div class="nav-badges" id="nav-user-info" style="display: none;">
+      <span class="badge badge-enc">🔒 AES-256-GCM</span>
+      <span class="badge badge-2fa" id="badge-2fa-status">🛡️ 2FA Actif</span>
+      <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);" id="nav-username">Utilisateur</span>
+      <button class="btn-logout" id="btn-logout">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ========================================================
+         SECTION 1 : AUTHENTIFICATION (LOGIN / REGISTER)
+         ======================================================== -->
+    <section id="auth-section" class="auth-wrapper glass glow-effect">
+      <div class="auth-header">
+        <h1>Coffre-Fort Sécurisé</h1>
+        <p>Connexion protégée avec 2FA Microsoft Authenticator</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login">Connexion</button>
+        <button class="auth-tab" id="tab-register">Créer un compte</button>
+      </div>
+
+      <!-- Formulaire Connexion -->
+      <form id="form-login">
+        <div class="form-group">
+          <label for="login-username">Nom d'utilisateur ou Email</label>
+          <input type="text" id="login-username" class="form-control" required placeholder="admin@projet2team.com" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Mot de passe maître</label>
+          <input type="password" id="login-password" class="form-control" required placeholder="••••••••••••" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;">
+          <span>Déverrouiller le Coffre</span> <span>→</span>
+        </button>
+      </form>
+
+      <!-- Formulaire Inscription -->
+      <form id="form-register" style="display: none;">
+        <div class="form-group">
+          <label for="reg-username">Nom d'utilisateur</label>
+          <input type="text" id="reg-username" class="form-control" required placeholder="votre_nom" minlength="3">
+        </div>
+        <div class="form-group">
+          <label for="reg-password">Mot de passe maître (8 caractères min.)</label>
+          <input type="password" id="reg-password" class="form-control" required placeholder="••••••••••••" minlength="8" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label for="reg-password-confirm">Confirmer le mot de passe maître</label>
+          <input type="password" id="reg-password-confirm" class="form-control" required placeholder="••••••••••••" minlength="8" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;">
+          <span>Créer mon Compte & Activer 2FA</span> <span>🛡️</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- ========================================================
+         SECTION 2 : TABLEAU DE BORD DU COFFRE (VAULT DASHBOARD)
+         ======================================================== -->
+    <section id="vault-section" style="display: none;">
+      
+      <!-- Statistiques Rapides -->
+      <div class="vault-stats">
+        <div class="stat-card glass">
+          <div class="stat-label">Identifiants Protégés</div>
+          <div class="stat-value" id="stat-total-secrets">0</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-label">Catégories & Espaces</div>
+          <div class="stat-value" id="stat-total-categories">0</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-label">Niveau de Chiffrement</div>
+          <div class="stat-value" style="color: var(--primary-cyan); font-size: 1.35rem;">AES-256-GCM</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-label">Protection Double Facteur</div>
+          <div class="stat-value" style="color: var(--accent-emerald); font-size: 1.35rem;">Microsoft 2FA</div>
+        </div>
+      </div>
+
+      <!-- Barre d'outils -->
+      <div class="vault-toolbar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="vault-search" class="form-control" placeholder="Rechercher par nom, URL, login, catégorie ou tag...">
+        </div>
+        <div class="toolbar-actions">
+          <button class="btn-secondary" id="btn-open-generator">⚡ Générateur MDP</button>
+          <button class="btn-secondary" id="btn-open-audit">📋 Journal d'Audit</button>
+          <button class="btn-primary" id="btn-new-cred" style="width: auto; padding: 0.75rem 1.4rem;">
+            <span>+ Nouvel Identifiant</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grille des identifiants -->
+      <div class="credentials-grid" id="credentials-grid">
+        <!-- Rendu dynamique JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================
+       MODALES DE SÉCURITÉ
+       ======================================================== -->
+
+  <!-- Modal 1 : Enrôlement 2FA Microsoft Authenticator -->
+  <div class="modal-overlay" id="modal-2fa-setup">
+    <div class="modal-content glass">
+      <div class="modal-header">
+        <h2 style="font-size: 1.35rem;">Configuration 2FA Microsoft Authenticator</h2>
+        <button class="close-modal" onclick="closeModal('modal-2fa-setup')">&times;</button>
+      </div>
+
+      <div id="setup-step-1">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          1. Ouvrez l'application <strong>Microsoft Authenticator</strong> sur votre smartphone.<br>
+          2. Appuyez sur <strong>+</strong> puis choisissez <strong>Autre compte</strong>.<br>
+          3. Scannez le QR Code ci-dessous :
+        </p>
+
+        <div class="qr-container" id="setup-qr-code">
+          <!-- QR SVG Injecté ici -->
+        </div>
+
+        <div style="text-align: center; margin-bottom: 1.25rem;">
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Clé de configuration manuelle :</span><br>
+          <code id="setup-secret-key" style="font-size: 0.95rem; color: var(--primary-cyan); font-weight: 700; user-select: all;"></code>
+          <br>
+          <a id="setup-otpauth-link" href="#" style="font-size: 0.8rem; color: var(--text-dim); text-decoration: underline; margin-top: 0.25rem; display: inline-block;">Ouvrir directement dans une application d'authentification</a>
+        </div>
+
+        <div class="form-group">
+          <label for="setup-totp-code">Code à 6 chiffres affiché sur Microsoft Authenticator</label>
+          <input type="text" id="setup-totp-code" class="form-control" style="text-align: center; font-size: 1.4rem; letter-spacing: 0.2em;" maxlength="6" placeholder="123456" autocomplete="one-time-code">
+        </div>
+
+        <button class="btn-primary" onclick="confirm2FASetup()" style="margin-top: 1rem;">
+          <span>Valider et Activer la 2FA</span>
+        </button>
+      </div>
+
+      <!-- Étape 2 : Sauvegarde des codes de secours -->
+      <div id="setup-step-2" style="display: none;">
+        <div style="text-align: center; margin-bottom: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎉</div>
+          <h3>2FA Activée avec Succès !</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.4rem;">
+            Conservez précieusement ces <strong>codes de secours à usage unique</strong>. Ils vous permettront de déverrouiller votre coffre si vous perdez votre smartphone.
+          </p>
+        </div>
+
+        <div class="backup-codes-grid" id="backup-codes-container">
+          <!-- Codes injectés ici -->
+        </div>
+
+        <button class="btn-primary" onclick="finish2FASetup()" style="margin-top: 1.5rem;">
+          <span>Accéder à mon Coffre-Fort</span> <span>→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2 : Challenge 2FA lors de la Connexion -->
+  <div class="modal-overlay" id="modal-2fa-challenge">
+    <div class="modal-content glass" style="max-width: 440px;">
+      <div class="modal-header">
+        <h2 style="font-size: 1.35rem;">Double Facteur (2FA) Requis</h2>
+        <button class="close-modal" onclick="closeModal('modal-2fa-challenge')">&times;</button>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        Consultez l'application <strong>Microsoft Authenticator</strong> pour le compte <strong id="challenge-username-display" style="color: var(--primary-cyan);"></strong> et saisissez le code temporaire :
+      </p>
+
+      <form id="form-2fa-verify">
+        <div class="form-group">
+          <input type="text" id="totp-challenge-code" class="form-control" style="text-align: center; font-size: 1.8rem; letter-spacing: 0.25em; font-weight: 700; color: var(--primary-cyan);" maxlength="6" placeholder="000000" autocomplete="one-time-code" required>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;">
+          <span>Vérifier le Code</span> <span>🛡️</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3 : Ajout / Édition d'Identifiant -->
+  <div class="modal-overlay" id="modal-credential">
+    <div class="modal-content glass">
+      <div class="modal-header">
+        <h2 id="cred-modal-title" style="font-size: 1.35rem;">Ajouter un identifiant sécurisé</h2>
+        <button class="close-modal" onclick="closeModal('modal-credential')">&times;</button>
+      </div>
+
+      <form id="form-cred">
+        <input type="hidden" id="form-cred-id">
+
+        <div class="form-group">
+          <label for="cred-title">Titre du service ou portail *</label>
+          <input type="text" id="cred-title" class="form-control" required placeholder="ex: Console AWS, Dolibarr Admin, Github">
+        </div>
+
+        <div class="form-group">
+          <label for="cred-url">URL d'accès</label>
+          <input type="url" id="cred-url" class="form-control" placeholder="https://app.projet2team.com">
+        </div>
+
+        <div class="form-group">
+          <label for="cred-username">Identifiant de connexion / Email *</label>
+          <input type="text" id="cred-username" class="form-control" required placeholder="admin@projet2team.com">
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+            <label for="cred-password" style="margin: 0;">Mot de passe secret *</label>
+            <button type="button" class="icon-btn" onclick="openModal('modal-generator'); triggerPasswordGenerator();" style="font-size: 0.8rem; color: var(--primary-cyan);">⚡ Générer un mot de passe fort</button>
+          </div>
+          <input type="password" id="cred-password" class="form-control" placeholder="Mot de passe confidentiel" autocomplete="new-password">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="cred-category">Catégorie</label>
+            <input type="text" id="cred-category" class="form-control" placeholder="Serveurs, Cloud, Portails..." list="categories-list">
+            <datalist id="categories-list">
+              <option value="Serveurs">
+              <option value="Cloud">
+              <option value="Portails Métier">
+              <option value="Banques">
+              <option value="Messagerie">
+            </datalist>
+          </div>
+          <div class="form-group">
+            <label for="cred-tags">Tags (séparés par des virgules)</label>
+            <input type="text" id="cred-tags" class="form-control" placeholder="production, critique">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cred-notes">Notes secrètes (chiffrées AES-256-GCM)</label>
+          <textarea id="cred-notes" class="form-control" rows="3" placeholder="Clés de récupération, questions secrètes, ports personnalisés..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-credential')">Annuler</button>
+          <button type="submit" class="btn-primary" style="width: auto; padding: 0.75rem 1.5rem;">Chiffrer & Sauvegarder</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4 : Générateur de Mot de Passe Cryptographique -->
+  <div class="modal-overlay" id="modal-generator">
+    <div class="modal-content glass" style="max-width: 480px;">
+      <div class="modal-header">
+        <h2 style="font-size: 1.35rem;">Générateur de Mot de Passe Sécurisé</h2>
+        <button class="close-modal" onclick="closeModal('modal-generator')">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label>Mot de passe généré :</label>
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="text" id="gen-output" class="form-control" readonly style="font-family: monospace; font-size: 1.15rem; color: var(--primary-cyan); font-weight: 700;">
+          <button class="btn-secondary" id="btn-refresh-pwd" title="Régénérer">🔄</button>
+          <button class="btn-secondary" id="btn-copy-gen-pwd" title="Copier">📋</button>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--accent-emerald); font-weight: 600; margin-top: 0.5rem;" id="gen-entropy-display"></div>
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+          <label for="gen-length" style="margin: 0;">Longueur : <strong id="gen-length-val">20</strong> caractères</label>
+        </div>
+        <input type="range" id="gen-length" min="12" max="64" value="20" style="width: 100%;">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <label><input type="checkbox" id="gen-upper" checked> Majuscules (A-Z)</label>
+        <label><input type="checkbox" id="gen-lower" checked> Minuscules (a-z)</label>
+        <label><input type="checkbox" id="gen-digits" checked> Chiffres (0-9)</label>
+        <label><input type="checkbox" id="gen-symbols" checked> Symboles (!@#$...)</label>
+        <label style="grid-column: 1 / -1;"><input type="checkbox" id="gen-no-ambiguous" checked> Exclure caractères ambigus (0, O, l, 1, I)</label>
+      </div>
+
+      <button class="btn-primary" onclick="useGeneratedPasswordInForm()">
+        <span>Utiliser ce mot de passe dans le formulaire</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal 5 : Journal d'Audit -->
+  <div class="modal-overlay" id="modal-audit">
+    <div class="modal-content glass" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2 style="font-size: 1.35rem;">Journal d'Audit de Sécurité</h2>
+        <button class="close-modal" onclick="closeModal('modal-audit')">&times;</button>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+        Historique immuable des accès et opérations cryptographiques sur votre coffre.
+      </p>
+
+      <div id="audit-logs-list" style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem;">
+        <!-- Injecté dynamiquement -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Conteneur Toast Notifications -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
