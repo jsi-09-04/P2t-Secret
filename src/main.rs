@@ -10,8 +10,8 @@ fn main() -> eframe::Result<()> {
     let native_options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
             .with_title("P2TSecret — Coffre-Fort Sécurisé 2FA")
-            .with_inner_size([960.0, 680.0])
-            .with_min_inner_size([700.0, 500.0])
+            .with_inner_size([1040.0, 720.0])
+            .with_min_inner_size([800.0, 560.0])
             .with_active(true),
         ..Default::default()
     };

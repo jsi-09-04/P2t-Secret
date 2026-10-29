@@ -25,6 +25,15 @@
    - Rendu de QR Code vectoriel natif instantané (`qr_widget.rs`).
    - Copie sécurisée dans le presse-papier avec purge automatique après 30s (`clipboard.rs`).
    - Machine à états complète (`app.rs`) : Initialisation mot de passe + QR Code 2FA -> Sauvegarde codes de secours -> Déverrouillage quotidien 2FA -> Tableau de bord filtrable avec modales.
-5. **Couverture de Tests (TDD)** :
+5. **Import CSV Universel & Migration de Données (`src/storage/csv_import.rs`)** :
+   - Détection automatique du séparateur (virgule `,` ou point-virgule `;`).
+   - Normalisation des colonnes et déduplication intelligente par URL + login.
+   - 198 comptes migrés et prêts dans `memory_bank/import/comptes_p2tsecret.csv`.
+6. **Personnalisation & Paramètres Avancés** :
+   - Gestion dynamique des catégories et nuage de tags personnalisés.
+   - Modale native `⚙️ Paramètres` avec onglets Catégories/Tags, Mot de passe maître et Sécurité.
+   - Fonction sécurisée de changement du mot de passe maître avec re-dérivation Argon2id et re-chiffrement complet du coffre sans déconnexion.
+7. **Couverture de Tests (TDD)** :
    - `tests/crypto_tests.rs` : Argon2id, AES-GCM, rejet des altérations de ciphertext, générateur d'entropie, TOTP Microsoft Authenticator, codes de secours.
    - `tests/vault_storage_tests.rs` : Cycle complet sauvegarde atomique et rechargement chiffré.
+   - `src/storage/csv_import.rs` : Tests unitaires d'importation CSV avec délimiteurs variés.

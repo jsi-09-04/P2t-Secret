@@ -19,18 +19,22 @@ Ce fichier documente la structure, l'architecture et les directives pour les age
 │   ├── decisionLog.md            # Registre des décisions d'architecture (ADR)
 │   ├── backlog.json              # SOURCE DE VÉRITÉ du backlog (task.md n'en est qu'un rendu)
 │   ├── task.md                   # Rendu lecture seule de backlog.json
+│   ├── import/                   # Scripts et données de migration (CSV)
 │   ├── plans/                    # Plans d'implémentation techniques
-│   └── specs/                    # Spécifications détaillées
-├── backend/                      # Moteur d'API Python (FastAPI, Cryptographie, TOTP)
-│   ├── core/                     # Sécurité, chiffrement AES-256-GCM, gestionnaire TOTP
-│   ├── models/                   # Modèles de données BDD (Users, Credentials, AuditLogs)
-│   ├── routers/                  # Endpoints REST (auth, vault, 2fa, export/import)
-│   └── schemas/                  # Schémas Pydantic stricts
-├── frontend/                     # Interface Web utilisateur (Glassmorphism, Cyber-sécurité)
-│   ├── css/                      # Styles Vanilla CSS modernes (thème sombre, tokens)
-│   ├── js/                       # Logique client, Web Crypto API, interactions
-│   └── index.html                # Application Web principale
-├── tests/                        # Tests unitaires et d'intégration (TDD)
+│   └── specs/                    # Spécifications fonctionnelles et d'architecture
+├── src/                          # Code source natif Rust
+│   ├── crypto/                   # Argon2id, AES-256-GCM, TOTP RFC 6238, Générateur
+│   ├── storage/                  # Modèle Vault, format P2TV01 et import CSV universel
+│   ├── ui/                       # Interface native egui / eframe (thème clair moderne, modales)
+│   ├── lib.rs                    # Export des modules de la librairie
+│   └── main.rs                   # Point d'entrée de l'application desktop
+├── tests/                        # Tests d'intégration et de sécurité Rust (TDD)
+│   ├── crypto_tests.rs           # Tests Argon2id, AES-GCM, TOTP, entropie
+│   └── vault_storage_tests.rs    # Tests sauvegarde atomique et intégrité
+├── scripts/                      # Scripts d'automatisation
+│   └── build_app.sh              # Création du bundle macOS P2TSecret.app
+├── data/                         # Dossier local de stockage du coffre chiffré (p2t_vault.enc)
+├── Cargo.toml                    # Définition du projet et dépendances Rust
 ├── AGENTS.md                     # Ce document de référence
 └── README.md
 ```

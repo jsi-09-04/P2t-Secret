@@ -68,3 +68,15 @@ cargo run
 cargo build --release
 ```
 L'exécutable optimisé se trouve dans `target/release/p2tsecret`.
+
+### 4. Générer l'application macOS (.app)
+```bash
+./scripts/build_app.sh
+```
+L'application autonome `target/release/P2TSecret.app` est prête à être ouverte ou glissée dans `/Applications`.
+
+### 5. Générer l'image disque d'installation macOS (.dmg)
+```bash
+./scripts/build_dmg.sh
+```
+L'image disque `target/release/P2TSecret.dmg` (2.5 Mo) permet d'installer l'application d'un simple glisser-déposer vers `Applications`.

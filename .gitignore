@@ -29,3 +29,6 @@ data/
 
 # Locks Agentic Factory
 backlog.json.lock
+
+# Clone/repôt imbriqué accidentel
+P2t-Secret/
