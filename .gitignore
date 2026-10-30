@@ -32,3 +32,7 @@ backlog.json.lock
 
 # Clone/repôt imbriqué accidentel
 P2t-Secret/
+
+# Script d'import Python (usage local uniquement, hors standard Rust)
+memory_bank/import/parse_excel_to_csv.py
+memory_bank/import/*.csv

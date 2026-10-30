@@ -1562,7 +1562,7 @@ impl P2TSecretApp {
                     }
 
                     if self.import_parsed_entries.is_none() {
-                        ui.label(RichText::new("Format toléré : title, login, password, url...").size(12.0).color(COLOR_TEXT_MUTED));
+                        ui.label(RichText::new("Format standard : nom, login, mot de passe (colonnes 1, 2, 3)").size(12.0).color(COLOR_TEXT_MUTED));
                     }
                 });
 
